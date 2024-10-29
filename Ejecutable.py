@@ -35,8 +35,12 @@ n = input('''Marque con un número ¿Que tratamiento desea realizar?\n
 ''')
 
 if n == '1':
-    print("Detectar Mutación")
-    Method.detectar_mutantes(ADN)
+    #print("Detectar Mutación")
+    
+    if(Method.detectar_mutantes(ADN)):
+        print("Mutaciones detectadas!")
+    else:
+        print("ADN sin Mutaciones!")
 elif n == '2':
     print("Sanar")
 elif n == '3' :
