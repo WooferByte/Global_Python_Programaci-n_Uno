@@ -47,4 +47,64 @@ class Detector:
                     self.n = 0
                 else:
                     break
+
+        if detection == False:
+
+            # Detectar diagonales[1]:
+            for i in range(0,3):
+                for j in range(0,3):
+                    if ADN[i][j] == ADN[i+1][j+1]: # Primera coincidencia!
+                        self.n +=1
+                        print(f"Letra número -> {self.n}")
+                        k = i + 1 
+                        l = j + 1
+                        while k < 6 or l < 6:
+                            print(f"¿ADN[{i}][{j}]: '{ADN[i][j]}' == ADN[{k}][{l}]: '{ADN[k][l]}'?")
+                            if ADN[i][j] == ADN[k][l]:
+                                self.n += 1
+                                print(f"Letra número -> {self.n}")
+                                if self.n >= 4: #(4) -> Cantidad de letras iguales en una misma diagonal.
+                                    detection = True
+                                    self.n = 0
+                                    break
+                                k += 1
+                                l += 1
+                            else:
+                                self.n = k = l = 0
+                                print(f"No Coincidencia! -> Seteo: {self.n}")
+                                break
+                        if detection == True:
+                            break
+                print("Salto de Fila!")
+                if detection == True:
+                    break
+            
+            # Detectar diagonales[2]:
+            for i in range(0,3):
+                for j in range(5, 2, -1):
+                    if ADN[i][j] == ADN[i+1][j-1]: # Primera coincidencia!
+                        self.n +=1
+                        print(f"Letra número -> {self.n}")
+                        k = i + 1 
+                        l = j - 1
+                        while k < 6 or l < 6:
+                            print(f"¿ADN[{i}][{j}]: '{ADN[i][j]}' == ADN[{k}][{l}]: '{ADN[k][l]}'?")
+                            if ADN[i][j] == ADN[k][l]:
+                                self.n += 1
+                                print(f"Letra número -> {self.n}")
+                                if self.n >= 4: #(4) -> Cantidad de letras iguales en una misma diagonal.
+                                    detection = True
+                                    self.n = 0
+                                    break
+                                k += 1
+                                l -= 1
+                            else:
+                                self.n = k = l = 0
+                                print(f"No Coincidencia! -> Seteo: {self.n}")
+                                break
+                        if detection == True:
+                            break
+                print("Salto de Fila!")
+                if detection == True:
+                    break
         return detection
