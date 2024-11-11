@@ -35,8 +35,6 @@ n = input('''Marque con un número ¿Que tratamiento desea realizar?\n
 ''')
 
 if n == '1':
-    #print("Detectar Mutación")
-    
     if(Method.detectar_mutantes(ADN)):
         print("Mutaciones detectadas!")
     else:
@@ -49,7 +47,35 @@ elif n == '3' :
         1- Radiación.
         2- Virus.\n
         ''')
-    if(n == '1'):
-        print("Radiación")
-    elif(n == '2'):
+    if n == '1':
+        print("Se solicita el ingreso de la posición inicial donde se desea incertar la mutación por medio de la Radiación.")
+        
+        while True:
+            PI = [int(x) for x in input("Ingrese dos valores (separados por espacio) entre 0 y 6: ").split()]
+            if len(PI) == 2 and all(0 <= x <= 6 for x in PI):
+                print("Valores válidos.")
+                break
+            else:
+                print("Error: Debe ingresar exactamente dos valores entre 0 y 6.")
+
+        while True:
+            Orientation = input("Ingrese 'H' si desea una mutación Horizontal o 'V' si desea una mutación Vertical: ")
+            if Orientation == 'H' or Orientation == 'V':
+                print("Valor válido.")
+                break
+            else:
+                print("Error: Debe ingresar 'H' o 'V' según lo deseado.")
+
+        while True:
+            base_nitrogenada = input("Ingrese la base nitrogenada con la que crear la mutación: ")
+            if base_nitrogenada in 'ATCG' and len(base_nitrogenada) == 1:
+                print("Valor válido.")
+                break
+            else:
+                print("Error: La base nitrogenada debe ser A, T, C o G.")
+
+        Radiation_Method = Radiacion(n, base_nitrogenada)
+        print(Radiation_Method.crear_mutante(PI, Orientation, ADN))
+        
+    elif n == '2':
         print("Virus")
