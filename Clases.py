@@ -14,14 +14,18 @@ class Detector:
 
         # Detectar horizontales:
         for row in ADN:
+            #print(f"row = {row}")
             for j in range(0,5):
+                #print(f"row[{j}] = {row[j]}")
                 if row[j] == row[j + 1]:
-                    #print(f"{row[j]} es igual a {row[j+1]}")
+                    print(f"{row[j]} es igual a {row[j+1]}")
                     self.n += 1
-                    #print(self.n)  
+                    print(self.n)  
+                else:
+                    self.n = 0
             if self.n >= 3:
-                #print("Mutación horizontal detectada!")
-                #print(self.n)
+                print("Mutación horizontal detectada!")
+                print(self.n)
                 self.detection = True
                 self.n = 0
                 break
@@ -219,4 +223,45 @@ class Radiacion(Mutador):
 
                     print(f"Después bucle {i} -> ADN[{PI[0]}][{PI[1] - i}] = {ADN[PI[0]][PI[1] - i]}")
         
+        return ADN
+
+class Virus(Mutador):
+
+    def crear_mutante(self, PI, ADN):
+
+        print("¡Accedimos al método 'crear_mutante' dentro de Virus!")
+        print(f"PI: {PI} | ADN: {ADN} | Base Nitrogenada: {self.base_nitrogenada}")
+
+        # De izquierda a derecha
+        if PI[1] in range(0, 3):
+
+            if PI[0] in range(0, 3):  # De arriba hacia abajo
+                
+                for k in range(0, 4):
+                    # Convertimos la fila en una lista, realizamos la modificación y volvemos a unir
+                    fila = list(ADN[PI[0] + k])
+                    fila[PI[1] + k] = self.base_nitrogenada
+                    ADN[PI[0] + k] = ''.join(fila)
+            
+            if PI[0] in range(3, 6):  # De abajo hacia arriba
+                
+                for k in range(0, 4):
+                    fila = list(ADN[PI[0] - k])
+                    fila[PI[1] + k] = self.base_nitrogenada
+                    ADN[PI[0] - k] = ''.join(fila)
+
+        # De derecha a izquierda
+        if PI[1] in range(3, 6):
+            
+            if PI[0] in range(0, 3):  # De arriba hacia abajo
+                for k in range(0, 4):
+                    fila = list(ADN[PI[0] + k])
+                    fila[PI[1] - k] = self.base_nitrogenada
+                    ADN[PI[0] + k] = ''.join(fila)
+            
+            if PI[0] in range(3, 6):  # De abajo hacia arriba
+                for k in range(0, 4):
+                    fila = list(ADN[PI[0] - k])
+                    fila[PI[1] - k] = self.base_nitrogenada
+                    ADN[PI[0] - k] = ''.join(fila)
         return ADN

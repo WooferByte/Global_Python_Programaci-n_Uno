@@ -25,6 +25,10 @@ while len(ADN) < 6:
 
 print("\n ADN ingresado correctamente: ", ADN, "\n")
 
+print("Matriz 6x6 (ADN):")
+for fila in ADN:
+    print(" ".join(fila))
+
 n = 0
 Method = Detector(n) # Instanciar
 
@@ -51,12 +55,12 @@ elif n == '3' :
         print("Se solicita el ingreso de la posición inicial donde se desea incertar la mutación por medio de la Radiación.")
         
         while True:
-            PI = [int(x) for x in input("Ingrese dos valores (separados por espacio) entre 0 y 6: ").split()]
-            if len(PI) == 2 and all(0 <= x <= 6 for x in PI):
+            PI = [int(x) for x in input("Ingrese dos valores (separados por espacio) entre 0 y 5: ").split()]
+            if len(PI) == 2 and all(0 <= x <= 5 for x in PI):
                 print("Valores válidos.")
                 break
             else:
-                print("Error: Debe ingresar exactamente dos valores entre 0 y 6.")
+                print("Error: Debe ingresar exactamente dos valores entre 0 y 5.")
 
         while True:
             Orientation = input("Ingrese 'H' si desea una mutación Horizontal o 'V' si desea una mutación Vertical: ")
@@ -79,3 +83,27 @@ elif n == '3' :
         
     elif n == '2':
         print("Virus")
+        print("Se solicita el ingreso de la posición inicial donde se desea incertar la mutación Virus.")
+        
+        while True:
+            PI = [int(x) for x in input("Ingrese dos valores (separados por espacio) entre 0 y 5: ").split()]
+            if len(PI) == 2 and all(0 <= x <= 5 for x in PI):
+                print("Valores válidos.")
+                break
+            else:
+                print("Error: Debe ingresar exactamente dos valores entre 0 y 5.")
+
+        while True:
+            base_nitrogenada = input("Ingrese la base nitrogenada con la que crear la mutación: ")
+            if base_nitrogenada in 'ATCG' and len(base_nitrogenada) == 1:
+                print("Valor válido.")
+                break
+            else:
+                print("Error: La base nitrogenada debe ser A, T, C o G.")
+        
+        Virus_Method = Virus(n, base_nitrogenada)
+        ADN = Virus_Method.crear_mutante(PI, ADN)
+
+        print("Matriz 6x6 (ADN):")
+        for fila in ADN:
+            print(" ".join(fila))
