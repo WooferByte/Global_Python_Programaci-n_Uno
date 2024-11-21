@@ -25,93 +25,96 @@ while len(ADN) < 6:
 
 print("\n ADN ingresado correctamente: ", ADN, "\n")
 
-print("Matriz 6x6 (ADN):")
-for fila in ADN:
-    print(" ".join(fila))
-
 n = 0
 Method = Detector(n) # Instanciar
 
-n = input('''Marque con un número ¿Que tratamiento desea realizar?\n
+while True:
+
+    print("Matriz 6x6 (ADN):")
+    for fila in ADN:
+        print(" ".join(fila))
+
+    opcion = input('''\nMarque con un número ¿Qué tratamiento desea realizar?\n
     1- Detectar Mutación.
     2- Sanar ADN.
-    3- Mutar ADN.\n
+    3- Mutar ADN.
+    4- Salir.\n
 ''')
 
-if n == '1':
-    if(Method.detectar_mutantes(ADN)):
-        print("Mutaciones detectadas!")
-    else:
-        print("ADN sin Mutaciones!")
-elif n == '2':
-    print("Sanar")
-    
-    Heal = Sanador(n) # Instanciar    
-    ADN = Heal.sanar_mutantes(ADN)
-
-    #print("Matriz 6x6 sanada (ADN):")
-    #for fila in ADN:
-        #print(" ".join(fila))
-
-elif n == '3' :
-    print("Mutar ADN")
-    n = input('''Marque con un número ¿Que mutación desea realziar?\n
-        1- Radiación.
-        2- Virus.\n
-        ''')
-    if n == '1':
-        print("Se solicita el ingreso de la posición inicial donde se desea incertar la mutación por medio de la Radiación.")
+    if opcion == '1':
+        if(Method.detectar_mutantes(ADN)):
+            print("Mutaciones detectadas!")
+        else:
+            print("ADN sin Mutaciones!")
+    elif opcion == '2':
+        print("Sanar")
         
-        while True:
-            PI = [int(x) for x in input("Ingrese dos valores (separados por espacio) entre 0 y 5: ").split()]
-            if len(PI) == 2 and all(0 <= x <= 5 for x in PI):
-                print("Valores válidos.")
-                break
-            else:
-                print("Error: Debe ingresar exactamente dos valores entre 0 y 5.")
+        Heal = Sanador(n) # Instanciar    
+        ADN = Heal.sanar_mutantes(ADN)
 
-        while True:
-            Orientation = input("Ingrese 'H' si desea una mutación Horizontal o 'V' si desea una mutación Vertical: ")
-            if Orientation == 'H' or Orientation == 'V':
-                print("Valor válido.")
-                break
-            else:
-                print("Error: Debe ingresar 'H' o 'V' según lo deseado.")
+        #print("Matriz 6x6 sanada (ADN):")
+        #for fila in ADN:
+            #print(" ".join(fila))
 
-        while True:
-            base_nitrogenada = input("Ingrese la base nitrogenada con la que crear la mutación: ")
-            if base_nitrogenada in 'ATCG' and len(base_nitrogenada) == 1:
-                print("Valor válido.")
-                break
-            else:
-                print("Error: La base nitrogenada debe ser A, T, C o G.")
+    elif opcion == '3' :
+        print("Mutar ADN")
+        subOpcion = input('''Marque con un número ¿Que mutación desea realziar?\n
+            1- Radiación.
+            2- Virus.\n
+            ''')
+        if subOpcion == '1':
+            print("Se solicita el ingreso de la posición inicial donde se desea incertar la mutación por medio de la Radiación.")
+            
+            while True:
+                PI = [int(x) for x in input("Ingrese dos valores (separados por espacio) entre 0 y 5: ").split()]
+                if len(PI) == 2 and all(0 <= x <= 5 for x in PI):
+                    print("Valores válidos.")
+                    break
+                else:
+                    print("Error: Debe ingresar exactamente dos valores entre 0 y 5.")
 
-        Radiation_Method = Radiacion(n, base_nitrogenada)
-        print(Radiation_Method.crear_mutante(PI, Orientation, ADN))
-        
-    elif n == '2':
-        print("Virus")
-        print("Se solicita el ingreso de la posición inicial donde se desea incertar la mutación Virus.")
-        
-        while True:
-            PI = [int(x) for x in input("Ingrese dos valores (separados por espacio) entre 0 y 5: ").split()]
-            if len(PI) == 2 and all(0 <= x <= 5 for x in PI):
-                print("Valores válidos.")
-                break
-            else:
-                print("Error: Debe ingresar exactamente dos valores entre 0 y 5.")
+            while True:
+                Orientation = input("Ingrese 'H' si desea una mutación Horizontal o 'V' si desea una mutación Vertical: ")
+                if Orientation == 'H' or Orientation == 'V':
+                    print("Valor válido.")
+                    break
+                else:
+                    print("Error: Debe ingresar 'H' o 'V' según lo deseado.")
 
-        while True:
-            base_nitrogenada = input("Ingrese la base nitrogenada con la que crear la mutación: ")
-            if base_nitrogenada in 'ATCG' and len(base_nitrogenada) == 1:
-                print("Valor válido.")
-                break
-            else:
-                print("Error: La base nitrogenada debe ser A, T, C o G.")
-        
-        Virus_Method = Virus(n, base_nitrogenada)
-        ADN = Virus_Method.crear_mutante(PI, ADN)
+            while True:
+                base_nitrogenada = input("Ingrese la base nitrogenada con la que crear la mutación: ")
+                if base_nitrogenada in 'ATCG' and len(base_nitrogenada) == 1:
+                    print("Valor válido.")
+                    break
+                else:
+                    print("Error: La base nitrogenada debe ser A, T, C o G.")
 
-        print("Matriz 6x6 (ADN):")
-        for fila in ADN:
-            print(" ".join(fila))
+            Radiation_Method = Radiacion(n, base_nitrogenada)
+            ADN = Radiation_Method.crear_mutante(PI, Orientation, ADN)
+            
+        elif subOpcion == '2':
+            print("Virus")
+            print("Se solicita el ingreso de la posición inicial donde se desea incertar la mutación Virus.")
+            
+            while True:
+                PI = [int(x) for x in input("Ingrese dos valores (separados por espacio) entre 0 y 5: ").split()]
+                if len(PI) == 2 and all(0 <= x <= 5 for x in PI):
+                    print("Valores válidos.")
+                    break
+                else:
+                    print("Error: Debe ingresar exactamente dos valores entre 0 y 5.")
+
+            while True:
+                base_nitrogenada = input("Ingrese la base nitrogenada con la que crear la mutación: ")
+                if base_nitrogenada in 'ATCG' and len(base_nitrogenada) == 1:
+                    print("Valor válido.")
+                    break
+                else:
+                    print("Error: La base nitrogenada debe ser A, T, C o G.")
+            
+            Virus_Method = Virus(n, base_nitrogenada)
+            ADN = Virus_Method.crear_mutante(PI, ADN)
+
+    elif opcion == '4':
+        print("¡Gracias por usar el programa! Hasta luego.")
+        break
