@@ -45,6 +45,14 @@ if n == '1':
         print("ADN sin Mutaciones!")
 elif n == '2':
     print("Sanar")
+    
+    Heal = Sanador(n) # Instanciar    
+    ADN = Heal.sanar_mutantes(ADN)
+
+    #print("Matriz 6x6 sanada (ADN):")
+    #for fila in ADN:
+        #print(" ".join(fila))
+
 elif n == '3' :
     print("Mutar ADN")
     n = input('''Marque con un número ¿Que mutación desea realziar?\n

@@ -1,3 +1,5 @@
+import random
+
 class Detector:
 
     
@@ -18,14 +20,16 @@ class Detector:
             for j in range(0,5):
                 #print(f"row[{j}] = {row[j]}")
                 if row[j] == row[j + 1]:
-                    print(f"{row[j]} es igual a {row[j+1]}")
+                    #print(f"{row[j]} es igual a {row[j+1]}")
                     self.n += 1
-                    print(self.n)  
+                    #print(self.n)
+                    if self.n >= 3:
+                        break
                 else:
                     self.n = 0
             if self.n >= 3:
-                print("Mutación horizontal detectada!")
-                print(self.n)
+                #print("Mutación horizontal detectada!")
+                #print(self.n)
                 self.detection = True
                 self.n = 0
                 break
@@ -61,14 +65,14 @@ class Detector:
                 for j in range(0,3):
                     if ADN[i][j] == ADN[i+1][j+1]: # Primera coincidencia!
                         self.n +=1
-                        print(f"Letra número -> {self.n}")
+                        #print(f"Letra número -> {self.n}")
                         k = i + 1 
                         l = j + 1
                         while k < 6 or l < 6:
-                            print(f"¿ADN[{i}][{j}]: '{ADN[i][j]}' == ADN[{k}][{l}]: '{ADN[k][l]}'?")
+                            #print(f"¿ADN[{i}][{j}]: '{ADN[i][j]}' == ADN[{k}][{l}]: '{ADN[k][l]}'?")
                             if ADN[i][j] == ADN[k][l]:
                                 self.n += 1
-                                print(f"Letra número -> {self.n}")
+                                #print(f"Letra número -> {self.n}")
                                 if self.n >= 4: #(4) -> Cantidad de letras iguales en una misma diagonal.
                                     self.detection = True
                                     self.n = 0
@@ -77,11 +81,11 @@ class Detector:
                                 l += 1
                             else:
                                 self.n = k = l = 0
-                                print(f"No Coincidencia! -> Seteo: {self.n}")
+                                #print(f"No Coincidencia! -> Seteo: {self.n}")
                                 break
                         if self.detection == True:
                             break
-                print("Salto de Fila!")
+                #print("Salto de Fila!")
                 if self.detection == True:
                     break
             
@@ -94,10 +98,10 @@ class Detector:
                         k = i + 1 
                         l = j - 1
                         while k < 6 or l < 6:
-                            print(f"¿ADN[{i}][{j}]: '{ADN[i][j]}' == ADN[{k}][{l}]: '{ADN[k][l]}'?")
+                            #print(f"¿ADN[{i}][{j}]: '{ADN[i][j]}' == ADN[{k}][{l}]: '{ADN[k][l]}'?")
                             if ADN[i][j] == ADN[k][l]:
                                 self.n += 1
-                                print(f"Letra número -> {self.n}")
+                                #print(f"Letra número -> {self.n}")
                                 if self.n >= 4: #(4) -> Cantidad de letras iguales en una misma diagonal.
                                     self.detection = True
                                     self.n = 0
@@ -106,11 +110,11 @@ class Detector:
                                 l -= 1
                             else:
                                 self.n = k = l = 0
-                                print(f"No Coincidencia! -> Seteo: {self.n}")
+                                #print(f"No Coincidencia! -> Seteo: {self.n}")
                                 break
                         if self.detection == True:
                             break
-                print("Salto de Fila!")
+                #print("Salto de Fila!")
                 if self.detection == True:
                     break
         return self.detection
@@ -265,3 +269,118 @@ class Virus(Mutador):
                     fila[PI[1] - k] = self.base_nitrogenada
                     ADN[PI[0] - k] = ''.join(fila)
         return ADN
+    
+class Sanador:
+
+    def __init__(self, n):
+        self.n = n # <- Atributo 1
+        self.detection = False # <- Atributo 2
+
+    def Detectar_Mutantes(self, ADN):
+        # Detectar horizontales:
+        for row in ADN:
+            for j in range(0,5):
+                if row[j] == row[j + 1]:
+                    self.n += 1
+                    if self.n >= 3:
+                        break
+                else:
+                    self.n = 0
+            if self.n >= 3:
+                self.detection = True
+                self.n = 0
+                break
+            else:
+                self.n = 0
+
+        if self.detection == False:
+            
+            # Detectar verticales:
+            for j in range(0,6):
+                for i in range(0,5):
+                    if ADN[i][j] == ADN[i + 1][j]:
+                        self.n += 1
+                        if self.n >= 3:
+                            self.detection = True
+                            self.n = 0
+                            break
+                    else:
+                        self.n = 0
+                if self.detection == False:
+                    self.n = 0
+                else:
+                    break
+
+        if self.detection == False:
+
+            # Detectar diagonales[1]:
+            for i in range(0,3):
+                for j in range(0,3):
+                    if ADN[i][j] == ADN[i+1][j+1]:
+                        self.n +=1
+                        k = i + 1 
+                        l = j + 1
+                        while k < 6 or l < 6:
+                            if ADN[i][j] == ADN[k][l]:
+                                self.n += 1
+                                if self.n >= 4:
+                                    self.detection = True
+                                    self.n = 0
+                                    break
+                                k += 1
+                                l += 1
+                            else:
+                                self.n = k = l = 0
+                                break
+                        if self.detection == True:
+                            break
+                if self.detection == True:
+                    break
+            
+            # Detectar diagonales[2]:
+            for i in range(0,3):
+                for j in range(5, 2, -1):
+                    if ADN[i][j] == ADN[i+1][j-1]:
+                        self.n +=1
+                        k = i + 1 
+                        l = j - 1
+                        while k < 6 or l < 6:
+                            if ADN[i][j] == ADN[k][l]:
+                                self.n += 1
+                                if self.n >= 4:
+                                    self.detection = True
+                                    self.n = 0
+                                    break
+                                k += 1
+                                l -= 1
+                            else:
+                                self.n = k = l = 0
+                                break
+                        if self.detection == True:
+                            break
+                if self.detection == True:
+                    break
+        return self.detection
+    
+    def sanar_mutantes(self, ADN):
+        
+        for m in range(10):
+
+            # Generar matriz aleatoria
+            ADN = [''.join(random.choices('ATCG', k=6)) for _ in range(6)]
+
+            print(f"Matriz generada aleatoriamente número [{m + 1}]:")
+            for fila in ADN:
+                print(" ".join(fila))
+            
+            # Verificar si la matriz es válida
+            self.n = 0
+            self.detection = False
+            
+            if not self.Detectar_Mutantes(ADN):
+                print("Matriz sanada!")
+                return ADN  # Si la matriz es válida, se devuelve
+            
+            elif m >= 9:
+                print("Matriz sanada no generada!")
+                return ADN
