@@ -26,7 +26,7 @@ while len(ADN) < 6:
 print("\n ADN ingresado correctamente: ", ADN, "\n")
 
 n = 0
-Method = Detector(n) # Instanciar
+Method = Detector(n)
 
 while True:
 
@@ -39,7 +39,7 @@ while True:
     2- Sanar ADN.
     3- Mutar ADN.
     4- Salir.\n
-''')
+    Opción -> ''')
 
     if opcion == '1':
         if(Method.detectar_mutantes(ADN)):
@@ -47,21 +47,15 @@ while True:
         else:
             print("ADN sin Mutaciones!")
     elif opcion == '2':
-        print("Sanar")
         
-        Heal = Sanador(n) # Instanciar    
+        Heal = Sanador(n)  
         ADN = Heal.sanar_mutantes(ADN)
 
-        #print("Matriz 6x6 sanada (ADN):")
-        #for fila in ADN:
-            #print(" ".join(fila))
-
     elif opcion == '3' :
-        print("Mutar ADN")
         subOpcion = input('''Marque con un número ¿Que mutación desea realziar?\n
             1- Radiación.
             2- Virus.\n
-            ''')
+            Opción -> ''')
         if subOpcion == '1':
             print("Se solicita el ingreso de la posición inicial donde se desea incertar la mutación por medio de la Radiación.")
             
@@ -93,7 +87,6 @@ while True:
             ADN = Radiation_Method.crear_mutante(PI, Orientation, ADN)
             
         elif subOpcion == '2':
-            print("Virus")
             print("Se solicita el ingreso de la posición inicial donde se desea incertar la mutación Virus.")
             
             while True:
